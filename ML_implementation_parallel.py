@@ -5,6 +5,8 @@
 #             exchange rates, the score of the forecasts,
 #             hyperparameters, labels and features as .json file
 #             and .csv file
+# Note   : Users can modify variables model and param for 
+#          other scikit-learn machine learning models
 # Author : John Tsang
 # Date   : October 17, 2017
 
@@ -67,8 +69,10 @@ if __name__ == '__main__':
     
     # Specify the machine learning model and a set of 
     # hyperparameters for gird search
-    model_lst = [RandomForestRegressor(random_state=0)]
-    param_lst = [{'max_depth': [1,2,3,4]}]
+    #############################################################
+    model = RandomForestRegressor(random_state=0)
+    param = {'max_depth': [1,2,3,4]}
+    ##############################################################
     
     # Generate a list of all possible label-feature combinations
     label_feature_pair = []
@@ -79,8 +83,8 @@ if __name__ == '__main__':
     # Run hyperparameter tuning and rolling forecast with
     # parallel programming
     r_lst = Parallel(n_jobs=4)(delayed(rolling_grid_search_ML)
-                           (model = model_lst[0], y = DataFrame(data[pair[0]]), X = data[pair[1]],
-                                           group_size = 365, param_grid=param_lst[0], scoring = rmse, 
+                           (model = model, y = DataFrame(data[pair[0]]), X = data[pair[1]],
+                                           group_size = 365, param_grid=param, scoring = rmse, 
                                            crit = crit_min, window_size = 7, size_hyper_sel = 30)
                            for pair in label_feature_pair)
     
