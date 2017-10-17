@@ -5,15 +5,14 @@
 #             exchange rates, the score of the forecasts,
 #             hyperparameters, labels and features as .json file
 #             and .csv file
-# Note   : Users can modify variables model and param for 
-#          other scikit-learn machine learning models
 # Author : John Tsang
 # Date   : October 17, 2017
 
 #Libraries
 from rolling_forecast import rolling_grid_search_ML
+from pandas import *
+from numpy import *
 import pandas as pd
-import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from joblib import Parallel, delayed
 
